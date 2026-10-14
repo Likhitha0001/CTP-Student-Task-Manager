@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">ST</div>
+            <div>
+                <h2>StudyMate</h2>
+                <span>Student Task Manager</span>
+            </div>
+        </div>
+
+        <div class="menu-title">MENU</div>
+
+        <nav>
+            <a class="active" href="#dashboard">
+                <span>▦</span> Dashboard
+            </a>
+            <a href="#tasks">
+                <span>✓</span> My Tasks
+            </a>
+            <a href="#algorithms">
+                <span>⚙</span> CTP Algorithms
+            </a>
+            <a href="#progress">
+                <span>◔</span> Progress
+            </a>
+        </nav>
+
+        <!-- CTP PROJECT CARD REMOVED -->
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <header class="header" id="dashboard">
+            <div>
+                <p class="small-heading">STUDENT WORKSPACE</p>
+                <h1>Student Task Manager</h1>
+                <p class="subtitle">
+                    Organize your study tasks and manage your time efficiently.
+                </p>
+            </div>
+            <div class="date-box">
+                <span>Today</span>
+                <strong id="today"></strong>
+            </div>
+        </header>
+
+        <!-- SUMMARY CARDS -->
+        <section class="summary">
+
+            <div class="summary-card">
+                <div class="card-icon blue">📋</div>
+                <div>
+                    <p>Total Tasks</p>
+                    <h2 id="taskCount">0</h2>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-icon purple">⏱</div>
+                <div>
+                    <p>Study Hours</p>
+                    <h2 id="totalHours">0</h2>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-icon green">✓</div>
+                <div>
+                    <p>Completed</p>
+                    <h2 id="completedCount">0</h2>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="card-icon red">!</div>
+                <div>
+                    <p>High Priority</p>
+                    <h2 id="highPriority">0</h2>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ADD TASK AND PROGRESS -->
+        <section class="top-grid">
+
+            <div class="box">
+                <div class="box-header">
+                    <div>
+                        <h2>Add New Task</h2>
+                        <p>Enter the details of your study task.</p>
+                    </div>
+                    <div class="header-icon">+</div>
+                </div>
+
+                <div class="form">
+                    <div class="input-group full">
+                        <label>Task Name</label>
+                        <input id="task" type="text"
+                               placeholder="Example: Python Assignment">
+                    </div>
+
+                    <div class="input-group full">
+                        <label>Subject</label>
+                        <input id="subject" type="text"
+                               placeholder="Example: Programming">
+                    </div>
+
+                    <div class="two-inputs">
+                        <div class="input-group">
+                            <label>Priority</label>
+                            <input id="priority" type="number"
+                                   min="1" max="10" placeholder="1 - 10">
+                        </div>
+
+                        <div class="input-group">
+                            <label>Study Hours</label>
+                            <input id="hours" type="number"
+                                   min="1" placeholder="Hours">
+                        </div>
+                    </div>
+
+                    <button class="primary-btn" onclick="addTask()">
+                        + Add Task
+                    </button>
+                </div>
+            </div>
+
+            <!-- PROGRESS -->
+            <div class="box" id="progress">
+                <div class="box-header">
+                    <div>
+                        <h2>Study Progress</h2>
+                        <p>Track your task completion.</p>
+                    </div>
+                </div>
+
+                <div class="progress-content">
+                    <div class="progress-circle">
+                        <span id="progressPercent">0%</span>
+                    </div>
+
+                    <div class="progress-info">
+                        <h3 id="progressText">0 of 0 tasks completed</h3>
+                        <div class="progress-track">
+                            <div id="progressFill"></div>
+                        </div>
+                        <p>
+                            Complete your pending tasks to improve your progress.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="progress-stats">
+                    <div>
+                        <span>Pending</span>
+                        <strong id="pendingCount">0</strong>
+                    </div>
+                    <div>
+                        <span>Completed</span>
+                        <strong id="progressCompleted">0</strong>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TASKS -->
+        <section class="box tasks-section" id="tasks">
+            <div class="tasks-header">
+                <div>
+                    <h2>My Tasks</h2>
+                    <p>View, search, sort and complete your tasks.</p>
+                </div>
+
+                <div class="task-controls">
+                    <input id="search" type="text"
+                           placeholder="🔍 Search tasks..."
+                           onkeyup="searchTasks()">
+
+                    <select id="sort" onchange="sortTasks()">
+                        <option value="default">Sort Tasks</option>
+                        <option value="priority">Highest Priority</option>
+                        <option value="hours">Most Study Hours</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="task-table">
+                <div class="table-head">
+                    <span>Task</span>
+                    <span>Subject</span>
+                    <span>Priority</span>
+                    <span>Hours</span>
+                    <span>Status</span>
+                    <span>Action</span>
+                </div>
+                <div id="taskContainer"></div>
+            </div>
+        </section>
+
+        <!-- CTP ALGORITHMS -->
+        <section class="box" id="algorithms">
+            <div class="box-header">
+                <div>
+                    <h2>CTP Algorithm Results</h2>
+                    <p>Computational techniques used in the project.</p>
+                </div>
+            </div>
+
+            <div class="algorithm-grid">
+
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">G</div>
+                    <div>
+                        <h3>Greedy Selection</h3>
+                        <p>Selects tasks based on the best immediate choice.</p>
+                        <strong id="greedyResult">0 tasks selected</strong>
+                    </div>
+                </div>
+
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">DP</div>
+                    <div>
+                        <h3>Dynamic Programming</h3>
+                        <p>Finds the best study-hour combination.</p>
+                        <strong id="dpResult">0 hours optimized</strong>
+                    </div>
+                </div>
+
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">Y</div>
+                    <div>
+                        <h3>Generator</h3>
+                        <p>Processes tasks one at a time using a generator.</p>
+                        <strong id="generatorResult">0 tasks generated</strong>
+                    </div>
+                </div>
+
+                <div class="algorithm-card">
+                    <div class="algorithm-icon">T</div>
+                    <div>
+                        <h3>Threading</h3>
+                        <p>Processes tasks concurrently using threads.</p>
+                        <strong id="threadResult">0 tasks processed</strong>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <strong>Student Task Manager</strong>
+            <span>CTP Project • Python • Algorithms • Data Structures</span>
+        </footer>
+
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
